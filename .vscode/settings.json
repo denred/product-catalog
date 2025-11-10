@@ -5,5 +5,26 @@
         "**/.git/subtree-cache/**": false
     },
     "git.alwaysShowStagedChangesResourceGroup": true,
-    "git.defaultBranchName": "master"
+    "git.defaultBranchName": "master",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "typescript.preferences.importModuleSpecifier": "relative",
+    "emmet.includeLanguages": {
+        "javascript": "javascriptreact",
+        "typescript": "typescriptreact"
+    },
+    "files.associations": {
+        "*.css": "css",
+        "*.scss": "scss"
+    },
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/.next": true,
+        "**/.git": true
+    }
 }
