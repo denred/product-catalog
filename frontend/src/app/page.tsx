@@ -4,6 +4,7 @@ import {
   useCreateProductMutation,
   useGetProductsQuery,
 } from '@/store/products-api';
+import { useAuth } from '@/contexts/AuthContext';
 import ProductSidebar from '@/components/ProductSidebar';
 import ProductGrid from '@/components/ProductGrid/ProductGrid';
 import AddProductButton from '@/components/AddProductButton/AddProductButton';
@@ -21,6 +22,7 @@ const ProductsPage = () => {
 
   const { data: products = [], isLoading } = useGetProductsQuery();
   const [createProduct] = useCreateProductMutation();
+  const { isAdmin } = useAuth();
 
   const handleAddProduct = async (productData: Omit<Product, '_id'>) => {
     await createProduct(productData);
@@ -48,10 +50,12 @@ const ProductsPage = () => {
       />
 
       <div className="products-content">
-        <AddProductButton
-          className="products-header"
-          onAddProduct={handleAddProduct}
-        />
+        {isAdmin() && (
+          <AddProductButton
+            className="products-header"
+            onAddProduct={handleAddProduct}
+          />
+        )}
 
         <ProductGrid
           products={filteredProducts}

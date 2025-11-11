@@ -1,0 +1,141 @@
+.navbar {
+  background: #fff;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+  .navbar-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .navbar-title-link {
+    text-decoration: none;
+    color: inherit;
+    transition: opacity 0.2s ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  .navbar-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111;
+    cursor: pointer;
+  }
+
+  .navbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+
+    .navbar-link {
+      text-decoration: none;
+      color: #374151;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: #007bff;
+        background: #f8f9fa;
+      }
+
+      &.active {
+        color: #007bff;
+        background: #e3f2fd;
+      }
+    }
+  }
+
+  .navbar-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    .user-name {
+      font-size: 0.9rem;
+      color: #374151;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .admin-badge {
+        background: #059669;
+        color: #fff;
+        font-size: 0.7rem;
+        padding: 0.25rem 0.5rem;
+        border-radius: 12px;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .btn-primary {
+    background: #111;
+    color: #fff;
+
+    &:hover {
+      background: #333;
+    }
+  }
+
+  .btn-secondary {
+    background: #f3f4f6;
+    color: #374151;
+
+    &:hover {
+      background: #e5e7eb;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    .navbar-content {
+      padding: 0 1rem;
+    }
+
+    .navbar-title {
+      font-size: 1.25rem;
+    }
+
+    .user-info {
+      flex-direction: column;
+      gap: 0.5rem;
+      align-items: flex-end;
+
+      .user-name {
+        font-size: 0.8rem;
+      }
+    }
+  }
+}

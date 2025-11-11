@@ -26,6 +26,9 @@ const bootstrap = async () => {
     .setDescription('Swagger API Documentation')
     .setVersion('1.0.0')
     .addTag('products', 'Product management endpoints')
+    .addTag('auth', 'Authentication endpoints')
+    .addTag('users', 'User management endpoints')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
@@ -40,9 +43,10 @@ const bootstrap = async () => {
   const hostUrl = process.env.HOST_URL || `http://localhost:${port}`;
 
   await app.listen(port, '0.0.0.0');
-  logger.log(`🚀 Server running on: ${hostUrl}/api`);
-  logger.log(`📚 Swagger docs: ${hostUrl}/${DOCUMENTATION}`);
-  logger.log(`📄 Swagger JSON: ${hostUrl}/${DOCUMENTATION}-json`);
+
+  logger.log(`Server running on: ${hostUrl}/api`);
+  logger.log(`Swagger docs: ${hostUrl}/${DOCUMENTATION}`);
+  logger.log(`Swagger JSON: ${hostUrl}/${DOCUMENTATION}-json`);
 };
 
 bootstrap().catch((error) => {

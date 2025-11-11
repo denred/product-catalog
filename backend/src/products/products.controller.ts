@@ -1,5 +1,18 @@
-import { Controller, Get, Post, Body, Query, Param, Put, Delete, HttpStatus } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Query,
+  Param,
+  Put,
+  Delete,
+  HttpStatus,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+
+import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
 import { CreateProductDto } from './dto/create-product.dto';
 import { QueryProductsDto } from './dto/query-products.dto';
@@ -13,6 +26,8 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Post()
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Create a new product' })
   @ApiResponse({
     status: HttpStatus.CREATED,
@@ -38,6 +53,8 @@ export class ProductsController {
   }
 
   @Put(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Update product by ID' })
   @ApiResponse({
     status: HttpStatus.OK,
@@ -48,6 +65,8 @@ export class ProductsController {
   }
 
   @Delete(':id')
+  @UseGuards(JwtAuthGuard)
+  @ApiBearerAuth()
   @ApiOperation({ summary: 'Delete product by ID' })
   @ApiResponse({
     status: HttpStatus.OK,

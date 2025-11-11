@@ -6,6 +6,7 @@ import {
   useUpdateProductMutation,
   useDeleteProductMutation,
 } from '@/store/products-api';
+import { useAuth } from '@/contexts/AuthContext';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -24,6 +25,7 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
   const resolvedParams = use(params);
   const slug = resolvedParams?.slug;
   const router = useRouter();
+  const { isAdmin } = useAuth();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -96,20 +98,22 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
             <p>{product.description}</p>
           </div>
 
-          <div className="actions">
-            <button
-              className="btn-primary"
-              onClick={() => setIsEditModalOpen(true)}
-            >
-              Update
-            </button>
-            <button
-              className="btn-danger"
-              onClick={() => setIsDeleteModalOpen(true)}
-            >
-              Delete
-            </button>
-          </div>
+          {isAdmin() && (
+            <div className="actions">
+              <button
+                className="btn-primary"
+                onClick={() => setIsEditModalOpen(true)}
+              >
+                Update
+              </button>
+              <button
+                className="btn-danger"
+                onClick={() => setIsDeleteModalOpen(true)}
+              >
+                Delete
+              </button>
+            </div>
+          )}
         </div>
       </div>
 

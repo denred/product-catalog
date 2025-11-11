@@ -1,4 +1,5 @@
 import Providers from '@/components/Providers';
+import Navbar from '@/components/Navbar/Navbar';
 import '../styles/globals.scss';
 
 export default function RootLayout({
@@ -9,7 +10,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navbar />
+          <main>{children}</main>
+        </Providers>
       </body>
     </html>
   );
