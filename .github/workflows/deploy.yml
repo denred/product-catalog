@@ -1,0 +1,34 @@
+name: Deploy to AWS EC2
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy via SSH and Docker Compose
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            if [ ! -d "${{ secrets.PROJECT_PATH }}" ]; then
+              mkdir -p ${{ secrets.PROJECT_PATH }}
+              cd ${{ secrets.PROJECT_PATH }}
+              git clone https://github.com/${{ github.repository }} .
+            else
+              cd ${{ secrets.PROJECT_PATH }}
+              git reset --hard
+              git pull origin main
+            fi
+
+            docker compose --env-file .env.prod up -d --build
+
+            docker system prune -f

@@ -6,7 +6,7 @@ services:
     container_name: mongo
     restart: always
     ports:
-      - "27017:27017"
+      - "${MONGO_PORT}:27017"
     volumes:
       - mongo_data:/data/db
     networks:
@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile
     container_name: backend
     ports:
-      - "4000:4000"
+      - "${BACKEND_PORT}:4000"
     env_file:
       - ./backend/.env
     volumes:
@@ -28,15 +28,15 @@ services:
       - mongo
     networks:
       - app-network
+    command: ${BACKEND_COMMAND}
 
   frontend:
     build:
       context: ./frontend
       dockerfile: Dockerfile
     container_name: frontend
-    command: npm run dev
     ports:
-      - "3000:3000"
+      - "${FRONTEND_PORT}:3000"
     env_file:
       - ./frontend/.env
     volumes:
@@ -46,6 +46,7 @@ services:
       - backend
     networks:
       - app-network
+    command: ${FRONTEND_COMMAND}
 
 volumes:
   mongo_data:
