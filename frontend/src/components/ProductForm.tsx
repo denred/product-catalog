@@ -34,7 +34,7 @@ export default function ProductForm() {
         <Form className="form">
           <h3>Add Product</h3>
           <Field name="title" placeholder="Title" />
-          <Field name="price" placeholder="Price" type="number" />
+          <Field name="price" placeholder="Price" type="number" step="0.1" />
           <Field name="image" placeholder="Image URL" />
           <Field name="category" placeholder="Category" />
           <Field name="description" placeholder="Description" />
