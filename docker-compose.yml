@@ -31,27 +31,15 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: frontend
     ports:
-      - "${FRONTEND_PORT}:3000"
+      - "3000:3000"
     env_file:
       - ./frontend/.env
-    depends_on:
-      - backend
     networks:
       - app-network
-    command: >
-      sh -c "
-        if [ \"$NODE_ENV\" = 'development' ]; then
-          npm run dev;
-        else
-          npm run start;
-        fi
-      "
-    volumes:
-      - type: bind
-        source: ./frontend
-        target: /app
+    environment:
+      - NODE_ENV=production
+    command: npm run start
 
 volumes:
   mongo_data:
