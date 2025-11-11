@@ -1,27 +1,26 @@
-FROM node:22-alpine AS base
+# ---------- BUILD STAGE ----------
+FROM node:22-alpine AS builder
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
 
-FROM base AS build
+COPY package*.json ./
+RUN npm ci
+
+
 COPY . .
 RUN npm run build
 
 
-FROM node:22-alpine AS development
-WORKDIR /app
-COPY --from=build /app ./
-EXPOSE 3000
-CMD ["npm", "run", "dev"]
-
-FROM node:22-alpine AS production
+FROM node:22-alpine
 WORKDIR /app
 
-COPY --from=build /app ./
-COPY --from=base /app/node_modules ./node_modules
+ENV NODE_ENV=production
 
-RUN npm prune --omit=dev
+
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
 
 EXPOSE 3000
-CMD ["node", "node_modules/next/dist/bin/next", "start"]
+CMD ["npm", "run", "start"]
