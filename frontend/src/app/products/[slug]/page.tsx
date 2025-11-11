@@ -42,15 +42,29 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
     id?: string
   ) => {
     if (!id) return;
-    await updateProduct({
-      id,
-      data: { ...productData, slug: generateSlug(productData.title) },
-    });
+    try {
+      const newSlug = generateSlug(productData.title);
+      await updateProduct({
+        id,
+        data: { ...productData, slug: newSlug },
+        oldSlug: slug,
+      }).unwrap();
+
+      if (newSlug !== slug) {
+        router.push(`/products/${newSlug}`);
+      }
+    } catch (error) {
+      console.error('Error updating product:', error);
+    }
   };
 
   const handleDelete = async (id: string) => {
-    await deleteProduct(id);
-    router.push('/');
+    try {
+      await deleteProduct(id).unwrap();
+      router.push('/');
+    } catch (error) {
+      console.error('Error deleting product:', error);
+    }
   };
 
   if (!slug) return <p>Invalid product URL.</p>;

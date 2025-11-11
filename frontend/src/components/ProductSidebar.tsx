@@ -4,7 +4,8 @@ import PriceRangeFilter from './PriceRangeFilter/PriceRangeFilter';
 import SearchInput from './SearchInput/SearchInput';
 import ProductCategoryFilter from './ProductCategoryFilter/ProductCategoryFilter';
 import SortFilter from './SortFilter/SortFilter';
-import { PRODUCT_CATEGORIES, SORT_OPTIONS, PricePerRange } from '../constants';
+import { useGetProductCategoriesQuery } from '@/store/products-api';
+import { SORT_OPTIONS, PricePerRange } from '../constants';
 import { SortType } from '@/enums';
 
 interface ProductSidebarProps {
@@ -28,12 +29,14 @@ export const ProductSidebar = ({
   sortBy = SortType.DEFAULT,
   onSortChange,
 }: ProductSidebarProps) => {
+  const { data: categories = [] } = useGetProductCategoriesQuery();
+
   return (
     <aside className="sidebar">
       <SearchInput value={searchTerm} onChange={onSearchChange} />
 
       <ProductCategoryFilter
-        categories={PRODUCT_CATEGORIES}
+        categories={categories}
         selectedCategories={selectedCategories}
         onCategoryChange={onCategoryChange}
       />

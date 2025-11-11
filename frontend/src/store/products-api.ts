@@ -43,37 +43,70 @@ export const productsApi = createApi({
         { type: ApiTagTypes.PRODUCTS, id: slug },
       ],
     }),
+    getProductCategories: builder.query<string[], void>({
+      query: () => `${ApiEndpoints.PRODUCTS}/categories`,
+      providesTags: [{ type: ApiTagTypes.PRODUCTS, id: 'CATEGORIES' }],
+    }),
     createProduct: builder.mutation<Product, Partial<Product>>({
       query: (body) => ({
         url: ApiEndpoints.PRODUCTS,
         method: HttpMethods.POST,
         body,
       }),
-      invalidatesTags: [{ type: ApiTagTypes.PRODUCTS, id: 'LIST' }],
+      invalidatesTags: [
+        { type: ApiTagTypes.PRODUCTS, id: 'LIST' },
+        { type: ApiTagTypes.PRODUCTS, id: 'CATEGORIES' },
+      ],
     }),
     updateProduct: builder.mutation<
       Product,
-      { id: string; data: Partial<Product> }
+      { id: string; data: Partial<Product>; oldSlug?: string }
     >({
       query: ({ id, data }) => ({
         url: `${ApiEndpoints.PRODUCTS}/${id}`,
         method: HttpMethods.PUT,
         body: data,
       }),
-      invalidatesTags: (result, error, { id }) => [
-        { type: ApiTagTypes.PRODUCTS, id },
-        { type: ApiTagTypes.PRODUCTS, id: 'LIST' },
-      ],
+      invalidatesTags: (result, error, { id, oldSlug }) => {
+        const tags = [
+          { type: ApiTagTypes.PRODUCTS, id },
+          { type: ApiTagTypes.PRODUCTS, id: 'LIST' },
+          { type: ApiTagTypes.PRODUCTS, id: 'CATEGORIES' },
+        ];
+
+        if (oldSlug && result?.slug && oldSlug !== result.slug) {
+          tags.push({ type: ApiTagTypes.PRODUCTS, id: oldSlug });
+        }
+
+        return tags;
+      },
     }),
     deleteProduct: builder.mutation<void, string>({
       query: (id) => ({
         url: `${ApiEndpoints.PRODUCTS}/${id}`,
         method: HttpMethods.DELETE,
       }),
-      invalidatesTags: (result, error, id) => [
-        { type: ApiTagTypes.PRODUCTS, id },
+      invalidatesTags: () => [
         { type: ApiTagTypes.PRODUCTS, id: 'LIST' },
+        { type: ApiTagTypes.PRODUCTS, id: 'CATEGORIES' },
       ],
+      onQueryStarted: async (id, { dispatch, queryFulfilled }) => {
+        try {
+          await queryFulfilled;
+
+          dispatch(
+            productsApi.util.updateQueryData(
+              'getProducts',
+              undefined,
+              (draft) => {
+                return draft.filter((product) => product._id !== id);
+              }
+            )
+          );
+        } catch {
+          console.error('Error deleting product from cache');
+        }
+      },
     }),
   }),
 });
@@ -81,6 +114,7 @@ export const productsApi = createApi({
 export const {
   useGetProductsQuery,
   useGetProductBySlugQuery,
+  useGetProductCategoriesQuery,
   useCreateProductMutation,
   useUpdateProductMutation,
   useDeleteProductMutation,

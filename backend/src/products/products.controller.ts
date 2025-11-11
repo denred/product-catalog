@@ -64,6 +64,20 @@ export class ProductsController {
     return this.productsService.update(id, dto);
   }
 
+  @Get('categories')
+  @ApiOperation({ summary: 'Get available product categories' })
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'List of available categories',
+    schema: {
+      type: 'array',
+      items: { type: 'string' },
+    },
+  })
+  public getCategories() {
+    return this.productsService.getCategories();
+  }
+
   @Delete(':id')
   @UseGuards(JwtAuthGuard)
   @ApiBearerAuth()

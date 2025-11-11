@@ -91,4 +91,13 @@ export class ProductsService {
       throw new NotFoundException(`Product with id "${id}" not found`);
     }
   }
+
+  /**
+   * Gets all unique categories from existing products
+   * @returns Array of unique category names
+   */
+  public async getCategories(): Promise<string[]> {
+    const categories = await this.productModel.distinct('category').exec();
+    return categories.sort();
+  }
 }

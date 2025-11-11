@@ -177,27 +177,51 @@
     .btn-primary {
       background: #111;
       color: #fff;
+      box-shadow: 0 2px 4px rgba(17, 17, 17, 0.2);
 
       &:hover:not(:disabled) {
         background: #333;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(17, 17, 17, 0.3);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(17, 17, 17, 0.2);
       }
     }
 
     .btn-secondary {
       background: #f3f4f6;
       color: #374151;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
       &:hover:not(:disabled) {
         background: #e5e7eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
       }
     }
 
     .btn-danger {
       background: #ef4444;
       color: #fff;
+      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
 
       &:hover:not(:disabled) {
         background: #dc2626;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
       }
     }
   }
@@ -291,18 +315,34 @@
     .btn-secondary {
       background: #f3f4f6;
       color: #374151;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 
       &:hover:not(:disabled) {
         background: #e5e7eb;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
       }
     }
 
     .btn-danger {
       background: #ef4444;
       color: #fff;
+      box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
 
       &:hover:not(:disabled) {
         background: #dc2626;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 8px rgba(239, 68, 68, 0.3);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: 0 2px 4px rgba(239, 68, 68, 0.2);
       }
     }
   }

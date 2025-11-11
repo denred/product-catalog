@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 import { createValidationSchema } from '@/validations/product';
-import { PRODUCT_CATEGORIES } from '@/constants';
+import { useGetProductCategoriesQuery } from '@/store/products-api';
 import { generateSlug } from '@/utils/generate-slug';
 import { getInitialProduct } from '@/utils/get-initial-product';
 import { FormConfigs, ProductFormModalProps } from '@/constants/form-configs';
@@ -22,6 +22,8 @@ const ProductFormModal = ({
 }: ProductFormModalProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
+
+  const { data: categories = [] } = useGetProductCategoriesQuery();
 
   const config = FormConfigs[mode];
   const initialValues = product
@@ -171,7 +173,7 @@ const ProductFormModal = ({
                     className="form-select"
                   >
                     <option value="">Select a category</option>
-                    {PRODUCT_CATEGORIES.map((category) => (
+                    {categories.map((category: string) => (
                       <option key={category} value={category}>
                         {category}
                       </option>

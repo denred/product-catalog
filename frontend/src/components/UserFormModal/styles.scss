@@ -1,0 +1,44 @@
+// Import styles from ProductFormModal and customize for UserFormModal
+@import '../ProductFormModal/styles.scss';
+
+.user-form {
+  @extend .product-form;
+}
+
+.user-preview {
+  background: #f9fafb;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+
+  h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.1rem;
+    color: #111;
+  }
+
+  p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+
+  .role-badge {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 12px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-transform: capitalize;
+
+    &.admin {
+      background: #dc3545;
+      color: white;
+    }
+
+    &.user {
+      background: #28a745;
+      color: white;
+    }
+  }
+}
