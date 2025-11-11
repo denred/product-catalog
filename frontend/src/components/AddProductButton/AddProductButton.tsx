@@ -6,7 +6,7 @@ import './styles.scss';
 import { Product } from '@/types/product';
 
 interface AddProductButtonProps {
-  onAddProduct: (product: Omit<Product, 'id'>) => Promise<void>;
+  onAddProduct: (product: Omit<Product, '_id'>) => Promise<void>;
   className?: string;
 }
 
@@ -24,9 +24,8 @@ const AddProductButton = ({
     setIsModalOpen(false);
   };
 
-  const handleSubmitProduct = async (product: Omit<Product, 'id'>) => {
+  const handleSubmitProduct = async (product: Omit<Product, '_id'>) => {
     await onAddProduct(product);
-    setIsModalOpen(false);
   };
 
   return (
@@ -42,6 +41,7 @@ const AddProductButton = ({
 
       <ProductFormModal
         isOpen={isModalOpen}
+        mode="create"
         onClose={handleCloseModal}
         onSubmit={handleSubmitProduct}
       />

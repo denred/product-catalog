@@ -22,7 +22,7 @@ const ProductsPage = () => {
   const { data: products = [], isLoading } = useGetProductsQuery();
   const [createProduct] = useCreateProductMutation();
 
-  const handleAddProduct = async (productData: Omit<Product, 'id'>) => {
+  const handleAddProduct = async (productData: Omit<Product, '_id'>) => {
     await createProduct(productData);
   };
 

@@ -1,11 +1,17 @@
 'use client';
-import { use } from 'react';
+import { use, useState } from 'react';
 import {
   useGetProductBySlugQuery,
   useGetProductsQuery,
+  useUpdateProductMutation,
+  useDeleteProductMutation,
 } from '@/store/products-api';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
+import ProductFormModal from '@/components/ProductFormModal/ProductFormModal';
+import { Product } from '@/types/product';
+import { generateSlug } from '@/utils/generate-slug';
 import './styles.scss';
 
 interface ProductDetailProps {
@@ -17,12 +23,33 @@ interface ProductDetailProps {
 const ProductDetail = ({ params }: ProductDetailProps) => {
   const resolvedParams = use(params);
   const slug = resolvedParams?.slug;
+  const router = useRouter();
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const { data: product, isLoading } = useGetProductBySlugQuery(slug || '', {
     skip: !slug,
   });
-
   const { data: allProducts = [] } = useGetProductsQuery();
+  const [updateProduct] = useUpdateProductMutation();
+  const [deleteProduct] = useDeleteProductMutation();
+
+  const handleUpdate = async (
+    productData: Omit<Product, '_id'>,
+    id?: string
+  ) => {
+    if (!id) return;
+    await updateProduct({
+      id,
+      data: { ...productData, slug: generateSlug(productData.title) },
+    });
+  };
+
+  const handleDelete = async (id: string) => {
+    await deleteProduct(id);
+    router.push('/');
+  };
 
   if (!slug) return <p>Invalid product URL.</p>;
   if (isLoading) return <p>Loading...</p>;
@@ -70,8 +97,18 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
           </div>
 
           <div className="actions">
-            <button className="btn-primary">Update</button>
-            <button className="btn-secondary">Delete</button>
+            <button
+              className="btn-primary"
+              onClick={() => setIsEditModalOpen(true)}
+            >
+              Update
+            </button>
+            <button
+              className="btn-danger"
+              onClick={() => setIsDeleteModalOpen(true)}
+            >
+              Delete
+            </button>
           </div>
         </div>
       </div>
@@ -100,6 +137,23 @@ const ProductDetail = ({ params }: ProductDetailProps) => {
           </div>
         </div>
       )}
+
+      <ProductFormModal
+        isOpen={isEditModalOpen}
+        mode="edit"
+        product={product}
+        onClose={() => setIsEditModalOpen(false)}
+        onSubmit={handleUpdate}
+      />
+
+      <ProductFormModal
+        isOpen={isDeleteModalOpen}
+        mode="delete"
+        product={product}
+        onClose={() => setIsDeleteModalOpen(false)}
+        onSubmit={handleUpdate}
+        onDelete={handleDelete}
+      />
     </div>
   );
 };
