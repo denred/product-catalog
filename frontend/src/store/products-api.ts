@@ -7,8 +7,7 @@ import {
   HttpMethods,
 } from '@/enums';
 
-const baseUrl =
-  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000/api/';
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
 export const productsApi = createApi({
   reducerPath: ApiReducerPaths.PRODUCTS_API,

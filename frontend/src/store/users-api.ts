@@ -2,8 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { User, CreateUserDto } from '@/types/user';
 import { ApiReducerPaths, HttpMethods, ApiEndpoints } from '../enums';
 
-const baseUrl =
-  process.env.NEXT_PUBLIC_API_BASE_URL || 'http://localhost:4000/api/';
+const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
 export const usersApi = createApi({
   reducerPath: ApiReducerPaths.USERS_API,
