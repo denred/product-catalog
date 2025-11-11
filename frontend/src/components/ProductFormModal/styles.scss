@@ -24,7 +24,7 @@
   background: #fff;
   border-radius: 12px;
   width: 100%;
-  max-width: 580px;
+  max-width: 640px;
   max-height: 90vh;
   overflow-y: auto;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
@@ -87,11 +87,16 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    width: 100%;
+
+    &.price {
+      display: flex;
+      max-width: 40%;
+    }
 
     &.inline {
       flex-direction: row;
-      align-items: flex-end;
-      justify-content: space-between;
+      align-items: center;
       gap: 1rem;
     }
 
@@ -106,13 +111,13 @@
       align-items: center;
       gap: 0.5rem;
       cursor: pointer;
+      margin-top: 1.3rem;
     }
   }
 
   .form-input,
   .form-select,
   .form-textarea {
-    width: 100%;
     padding: 0.7rem 0.8rem;
     border: 1px solid #d1d5db;
     border-radius: 6px;
@@ -135,6 +140,9 @@
 
   .form-checkbox {
     accent-color: #111;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
   }
 
   .error {
@@ -181,6 +189,40 @@
       &:hover:not(:disabled) {
         background: #e5e7eb;
       }
+    }
+  }
+
+  .form-select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding: 0.7rem 2.2rem 0.7rem 0.8rem;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #111;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      border-color: #999;
+    }
+
+    &:focus {
+      border-color: #111;
+      box-shadow: 0 0 0 3px rgba(17, 17, 17, 0.1);
+      outline: none;
+    }
+
+    option {
+      color: #111;
+      background: #fff;
+      font-size: 0.9rem;
     }
   }
 }

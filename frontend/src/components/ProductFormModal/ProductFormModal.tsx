@@ -130,7 +130,7 @@ const ProductFormModal = ({
               </div>
 
               <div className="form-group inline">
-                <div>
+                <div className="form-group price">
                   <label htmlFor="price">Price *</label>
                   <Field
                     id="price"
