@@ -49,6 +49,6 @@ jobs:
             docker system prune -af || true
 
             echo "Building Docker containers..."
-            docker compose --env-file .env.prod up -d --build --pull
+            docker compose --env-file .env.prod up -d --build --pull=always
 
             echo "Deployment complete!"
