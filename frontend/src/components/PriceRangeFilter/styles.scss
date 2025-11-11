@@ -1,0 +1,225 @@
+.price-range {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .price-label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 0.25rem;
+  }
+
+  .price-inputs {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .price-input {
+      width: 80px;
+      padding: 6px 8px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      text-align: center;
+      transition: border-color 0.2s ease;
+
+      &:focus {
+        border-color: #111;
+        outline: none;
+      }
+
+      &::placeholder {
+        color: #999;
+        font-style: italic;
+        font-weight: 500;
+      }
+    }
+
+    .price-dash {
+      color: #777;
+      font-weight: 500;
+      z-index: 1;
+    }
+  }
+
+  .slider-wrapper {
+    position: relative;
+    height: 25px;
+    display: flex;
+    align-items: center;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: #e9ecef;
+      border-radius: 2px;
+      transform: translateY(-50%);
+      z-index: 1;
+    }
+
+    .range-track {
+      position: absolute;
+      top: 50%;
+      height: 4px;
+      background: linear-gradient(90deg, #007bff, #28a745);
+      border-radius: 2px;
+      transform: translateY(-50%);
+      z-index: 2;
+
+      will-change: left, width;
+
+      transition: none;
+    }
+
+    .slider {
+      width: 100%;
+      height: 20px;
+      appearance: none;
+      background: transparent;
+      border-radius: 5px;
+      outline: none;
+      position: absolute;
+      pointer-events: none;
+      left: -2px;
+      z-index: 3;
+
+      &::-webkit-slider-track {
+        background: transparent;
+        border: none;
+        height: 0;
+      }
+
+      &::-moz-range-track {
+        background: transparent;
+        border: none;
+        height: 0;
+      }
+
+      &::-webkit-slider-thumb {
+        appearance: none;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #111;
+        cursor: pointer;
+        pointer-events: auto;
+        transition:
+          background 0.2s ease,
+          transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+          background: #333;
+        }
+      }
+
+      &::-moz-range-thumb {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #111;
+        cursor: pointer;
+        border: none;
+        transition:
+          background 0.2s ease,
+          transform 0.2s ease;
+
+        &:hover {
+          transform: scale(1.1);
+          background: #333;
+        }
+      }
+
+      &:active::-webkit-slider-thumb {
+        transform: scale(1.2);
+        background: #0066cc;
+      }
+
+      &:active::-moz-range-thumb {
+        transform: scale(1.2);
+        background: #0066cc;
+      }
+    }
+
+    .slider-min {
+      &::-webkit-slider-thumb {
+        background: #007bff;
+      }
+
+      &::-moz-range-thumb {
+        background: #007bff;
+      }
+    }
+
+    .slider-max {
+      &::-webkit-slider-thumb {
+        background: #28a745;
+      }
+
+      &::-moz-range-thumb {
+        background: #28a745;
+      }
+    }
+
+    .slider-overlap {
+      &::-webkit-slider-thumb {
+        border: 2px solid #fff;
+        box-shadow:
+          0 0 0 1px #000,
+          0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      &::-moz-range-thumb {
+        border: 2px solid #fff;
+        box-shadow:
+          0 0 0 1px #000,
+          0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .slider-active {
+      &::-webkit-slider-thumb {
+        transform: scale(1.15);
+        box-shadow:
+          0 0 0 3px rgba(0, 123, 255, 0.3),
+          0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+
+      &::-moz-range-thumb {
+        transform: scale(1.15);
+        box-shadow:
+          0 0 0 3px rgba(0, 123, 255, 0.3),
+          0 2px 8px rgba(0, 0, 0, 0.3);
+      }
+    }
+
+    .slider-hovered {
+      &::-webkit-slider-thumb {
+        transform: scale(1.05);
+        box-shadow:
+          0 0 0 2px rgba(0, 123, 255, 0.2),
+          0 2px 6px rgba(0, 0, 0, 0.2);
+      }
+
+      &::-moz-range-thumb {
+        transform: scale(1.05);
+        box-shadow:
+          0 0 0 2px rgba(0, 123, 255, 0.2),
+          0 2px 6px rgba(0, 0, 0, 0.2);
+      }
+    }
+  }
+
+  .price-values {
+    display: flex;
+    justify-content: space-between;
+    color: #555;
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+}

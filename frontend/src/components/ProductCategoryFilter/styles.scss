@@ -1,0 +1,53 @@
+.category-filter {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+
+  .category-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #111;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .category-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 2px 0;
+    border-radius: 4px;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f9f9f9;
+    }
+
+    .category-checkbox {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: #111;
+    }
+
+    .category-label {
+      font-size: 0.9rem;
+      color: #222;
+      line-height: 1.3;
+      user-select: none;
+    }
+
+    &:has(.category-checkbox:checked) {
+      .category-label {
+        color: #000;
+        font-weight: 500;
+      }
+    }
+  }
+}
