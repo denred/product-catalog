@@ -21,9 +21,6 @@ services:
       - "${BACKEND_PORT}:4000"
     env_file:
       - ./backend/.env
-    volumes:
-      - ./backend:/app
-      - /app/node_modules
     depends_on:
       - mongo
     networks:
@@ -39,14 +36,22 @@ services:
       - "${FRONTEND_PORT}:3000"
     env_file:
       - ./frontend/.env
-    volumes:
-      - ./frontend:/app
-      - /app/node_modules
     depends_on:
       - backend
     networks:
       - app-network
-    command: ${FRONTEND_COMMAND}
+    command: >
+      sh -c "
+        if [ \"$NODE_ENV\" = 'development' ]; then
+          npm run dev;
+        else
+          npm run start;
+        fi
+      "
+    volumes:
+      - type: bind
+        source: ./frontend
+        target: /app
 
 volumes:
   mongo_data:
