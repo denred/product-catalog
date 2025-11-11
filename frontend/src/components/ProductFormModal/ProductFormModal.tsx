@@ -1,12 +1,15 @@
 'use client';
 import { useEffect, useState, useRef } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+
 import { createValidationSchema } from '@/validations/product';
 import { PRODUCT_CATEGORIES } from '@/constants';
 import { generateSlug } from '@/utils/generate-slug';
 import { getInitialProduct } from '@/utils/get-initial-product';
 import { FormConfigs, ProductFormModalProps } from '@/constants/form-configs';
 import { Product } from '../../types/product';
+import ImageUpload from '../ImageUpload';
+
 import './styles.scss';
 
 const ProductFormModal = ({
@@ -146,12 +149,10 @@ const ProductFormModal = ({
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="image">Image URL *</label>
-                  <Field
-                    id="image"
-                    name="image"
-                    type="url"
-                    className="form-input"
+                  <label htmlFor="image">Image *</label>
+                  <ImageUpload
+                    value={values.image}
+                    onChange={(url) => setFieldValue('image', url)}
                     placeholder="https://example.com/image.jpg"
                   />
                   <ErrorMessage

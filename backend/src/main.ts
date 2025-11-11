@@ -1,15 +1,32 @@
+import * as path from 'path';
+
 import { ValidationPipe, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { type NestFastifyApplication, FastifyAdapter } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import multipart from '@fastify/multipart';
+import fastifyStatic from '@fastify/static';
+
 import { AppModule } from './app.module';
+import { UPLOAD_CONFIG } from './upload/constants/upload.constants';
 
 const DOCUMENTATION = 'docs';
 
 const bootstrap = async () => {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
   const logger = new Logger('Bootstrap');
+
+  await app.register(multipart, {
+    limits: {
+      fileSize: UPLOAD_CONFIG.MAX_FILE_SIZE,
+    },
+  });
+
+  await app.register(fastifyStatic, {
+    root: path.join(process.cwd(), 'uploads'),
+    prefix: '/api/uploads/',
+  });
 
   app.enableCors({
     origin: true,

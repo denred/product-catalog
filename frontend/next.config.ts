@@ -1,4 +1,4 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next';
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -7,9 +7,15 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: process.env.NEXT_PUBLIC_S3_HOSTNAME || 'denis-n8n-s3-v1.s3.eu-north-1.amazonaws.com',
+        hostname: 'denis-n8n-s3-v1.s3.eu-north-1.amazonaws.com',
         port: '',
-        pathname: '/images/**',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: '*.amazonaws.com',
+        port: '',
+        pathname: '/**',
       },
     ],
   },
