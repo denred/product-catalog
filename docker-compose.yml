@@ -18,7 +18,7 @@ services:
       dockerfile: Dockerfile
     container_name: backend
     ports:
-      - "${BACKEND_PORT}:4000"
+      - "4000:4000"
     env_file:
       - ./backend/.env
     depends_on:
