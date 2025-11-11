@@ -67,8 +67,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const login = async (email: string, password: string): Promise<boolean> => {
     setAuthState((prev) => ({ ...prev, isLoading: true }));
 
-    console.log('Attempting login with', { email, password });
-
     try {
       const response = await fetch(`${API_BASE_URL}auth/login`, {
         method: 'POST',
@@ -81,14 +79,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
 
       const data = await response.json();
-      console.log('Login response status:', data);
       const user = data.user as User;
       const token = data.token as string;
 
       localStorage.setItem('user', JSON.stringify(user));
       localStorage.setItem('token', token);
-
-      console.log('Login successful:', { user, token });
 
       setAuthState({ user, token, isAuthenticated: true, isLoading: false });
       return true;
