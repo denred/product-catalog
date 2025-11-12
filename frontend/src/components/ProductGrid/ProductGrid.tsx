@@ -1,5 +1,3 @@
-'use client';
-
 import { Product } from '@/types/product';
 import ProductCard from '../ProductCard/ProductCard';
 import './styles.scss';
